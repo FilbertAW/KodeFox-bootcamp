@@ -16,19 +16,14 @@ let object2: Object = {
   pets: {cat: 1, dog: 2},
   grades: [`A`, `B`, `A`],
 };
-function isEqual(one: mixed, two: mixed) {
+export default function isEqual(one: mixed, two: mixed) {
   if (one === null || two === null) {
     return one === two;
   }
   if (Array.isArray(one) && Array.isArray(two)) {
     return compareArray(one, two);
   }
-  if (
-    typeof one === 'object' &&
-    !Array.isArray(one) &&
-    typeof two === 'object' &&
-    !Array.isArray(two)
-  ) {
+  if (typeof one === 'object' && typeof two === 'object') {
     return compareObject(one, two);
   }
   return false;
@@ -38,28 +33,30 @@ let result = isEqual(object1, object2);
 console.log(result);
 
 
+
 //@flow
 
 export default function compareArray(arr1: Array<mixed>, arr2: Array<mixed>) {
-  if (arr1.length === arr2.length) {
-    return true;
+  console.log('entering ' + arr1);
+  console.log('entering-2 ' + arr2);
+  if (arr1.length !== arr2.length) {
+    console.log('comparing' + arr1.length + arr2.length);
+    return false;
   }
   let count = 0;
   for (let i = 0; i < arr1.length; i++) {
-    if (arr1[i] === arr2[i]) {
-      count += 1;
-    }
-    if (count === arr1.length) {
-      return true;
-    } else {
+    console.log('comparing i');
+    console.log(arr1[i], arr2[i]);
+    if (arr1[i] !== arr2[i]) {
       return false;
     }
   }
+  return true;
 }
 
 
 import compareArray from './compareArray';
-
+import isEqual from './arrayObject';
 function compareObject(objOne: Object, objTwo: Object) {
   let keysOne = Object.keys(objOne);
   let keysTwo = Object.keys(objTwo);
@@ -67,21 +64,17 @@ function compareObject(objOne: Object, objTwo: Object) {
     return false;
   }
   for (let key of keysOne) {
-    console.log(objOne[key]);
-    console.log(objTwo[key]);
     if (objOne[key] !== objTwo[key]) {
-      if (
-        typeof objOne[key] === 'object' &&
-        !Array.isArray(objOne[key]) &&
-        typeof objTwo[key] === 'object' &&
-        !Array.isArray(objTwo[key])
-      ) {
-        return compareObject(objOne[key], objTwo[key]);
+      if (typeof objOne[key] === 'object' && typeof objTwo[key] === 'object') {
+        if (isEqual(objOne[key], objTwo[key]) === false) {
+          return false;
+        }
       }
-      if (Array.isArray(objOne) || Array.isArray(objTwo)) {
-        return compareArray();
+      if (Array.isArray(objOne[key]) || Array.isArray(objTwo[key])) {
+        if (compareArray(objOne[key], objTwo[key]) === false) {
+          return false;
+        }
       }
-      return false;
     }
   }
   return true;
