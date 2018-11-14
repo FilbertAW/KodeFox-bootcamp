@@ -14,7 +14,7 @@ function containUpperLower(password) {
   if (password === setLower || password === setUpper) {
     return {success: false, reason: 'Password does not meet requirement'};
   } else {
-    return true;
+    return {success: true, reason: 'fine'};
   }
 }
 
