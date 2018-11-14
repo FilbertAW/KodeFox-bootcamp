@@ -17,3 +17,27 @@ function containUpperLower(password) {
     return true;
   }
 }
+
+password-test.js
+import checkPassword from '../checkpass';
+it('should fail if password length less than 6', () => {
+  expect(checkPassword('')).toEqual({
+    success: false,
+    reason: 'Password too short',
+  });
+  expect(checkPassword('abcde')).toEqual({
+    success: false,
+    reason: 'Password too short',
+  });
+});
+it('should fail if password does not contain uppercase and lowercase', () => {
+  expect(checkPassword('abcdef')).toEqual({
+    success: false,
+    reason: 'Password does not meet requirement',
+  });
+
+  expect(checkPassword('abcdefG')).toEqual({
+    success: true,
+    reason: 'fine',
+  });
+});
