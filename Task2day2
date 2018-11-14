@@ -1,0 +1,32 @@
+//@flow
+import compareObject from '../src/compareObject';
+import compareArray from '../src/compareArray';
+let object1 = {
+  name: 'john',
+  team: 'doe',
+  age: 25,
+};
+let object2 = {
+  name: 'jane',
+  team: 'doe',
+  age: 24,
+};
+let array1 = [2, 3, 4];
+let array2 = ['alpha', 'beta', 'charlie'];
+function isEqual(one: mixed, two: mixed) {
+  if (one === null || two === null) {
+    return one === two;
+  }
+  if (Array.isArray(one) && Array.isArray(two)) {
+    return compareArray(one, two);
+  }
+  if (
+    typeof one === 'object' &&
+    !Array.isArray(one) &&
+    typeof two === 'object' &&
+    !Array.isArray(two)
+  ) {
+    return compareObject;
+  }
+  return false;
+}
