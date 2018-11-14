@@ -1,0 +1,12 @@
+let a = [1, 2, 3];
+
+function doubled(array) {
+  let newArray = [];
+  for (let i of array) {
+    newArray.push(i * 2);
+  }
+  return newArray;
+}
+
+let result = doubled(a);
+console.log(result);
