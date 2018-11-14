@@ -1,0 +1,27 @@
+//@flow
+
+let array1 = [1, 2, 3];
+let array2 = [1, 2, 3];
+
+function isEqual(arr1, arr2) {
+  if (arr1.length !== arr2.length) {
+    return false;
+  }
+  if (typeof arr1 !== typeof arr2) {
+    return false;
+  }
+  let count = 0;
+  for (let i = 0; i < arr1.length; i++) {
+    if (arr1[i] === arr2[i]) {
+      count += 1;
+    }
+  }
+  console.log(count);
+  if (count !== arr1.length) {
+    return false;
+  } else {
+    return true;
+  }
+}
+result = isEqual(array1, array2);
+console.log(result);
