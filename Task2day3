@@ -1,0 +1,7 @@
+//@flow
+
+function checkPassword(password) {
+  if (password.length < 6) {
+    return {success: false, reason: 'Password too short'};
+  }
+}
