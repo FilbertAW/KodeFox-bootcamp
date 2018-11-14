@@ -37,16 +37,11 @@ console.log(result);
 //@flow
 
 export default function compareArray(arr1: Array<mixed>, arr2: Array<mixed>) {
-  console.log('entering ' + arr1);
-  console.log('entering-2 ' + arr2);
   if (arr1.length !== arr2.length) {
-    console.log('comparing' + arr1.length + arr2.length);
     return false;
   }
   let count = 0;
   for (let i = 0; i < arr1.length; i++) {
-    console.log('comparing i');
-    console.log(arr1[i], arr2[i]);
     if (arr1[i] !== arr2[i]) {
       return false;
     }
