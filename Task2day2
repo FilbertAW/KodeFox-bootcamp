@@ -1,18 +1,21 @@
 //@flow
-import compareObject from '../src/compareObject';
-import compareArray from '../src/compareArray';
-let object1 = {
-  name: 'john',
-  team: 'doe',
-  age: 25,
+import compareObject from './compareObject';
+import compareArray from './compareArray';
+
+let object1: Object = {
+  isStudent: true,
+  name: `Asd`,
+  ID: 1,
+  pets: {cat: 1, dog: 2},
+  grades: [`A`, `B`, `A`],
 };
-let object2 = {
-  name: 'jane',
-  team: 'doe',
-  age: 24,
+let object2: Object = {
+  name: `Asd`,
+  ID: 1,
+  isStudent: true,
+  pets: {cat: 1, dog: 2},
+  grades: [`A`, `B`, `A`],
 };
-let array1 = [2, 3, 4];
-let array2 = ['alpha', 'beta', 'charlie'];
 function isEqual(one: mixed, two: mixed) {
   if (one === null || two === null) {
     return one === two;
@@ -26,7 +29,61 @@ function isEqual(one: mixed, two: mixed) {
     typeof two === 'object' &&
     !Array.isArray(two)
   ) {
-    return compareObject;
+    return compareObject(one, two);
   }
   return false;
 }
+
+let result = isEqual(object1, object2);
+console.log(result);
+
+
+//@flow
+
+export default function compareArray(arr1: Array<mixed>, arr2: Array<mixed>) {
+  if (arr1.length === arr2.length) {
+    return true;
+  }
+  let count = 0;
+  for (let i = 0; i < arr1.length; i++) {
+    if (arr1[i] === arr2[i]) {
+      count += 1;
+    }
+    if (count === arr1.length) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+}
+
+
+import compareArray from './compareArray';
+
+function compareObject(objOne: Object, objTwo: Object) {
+  let keysOne = Object.keys(objOne);
+  let keysTwo = Object.keys(objTwo);
+  if (keysOne.length !== keysTwo.length) {
+    return false;
+  }
+  for (let key of keysOne) {
+    console.log(objOne[key]);
+    console.log(objTwo[key]);
+    if (objOne[key] !== objTwo[key]) {
+      if (
+        typeof objOne[key] === 'object' &&
+        !Array.isArray(objOne[key]) &&
+        typeof objTwo[key] === 'object' &&
+        !Array.isArray(objTwo[key])
+      ) {
+        return compareObject(objOne[key], objTwo[key]);
+      }
+      if (Array.isArray(objOne) || Array.isArray(objTwo)) {
+        return compareArray();
+      }
+      return false;
+    }
+  }
+  return true;
+}
+export default compareObject;
