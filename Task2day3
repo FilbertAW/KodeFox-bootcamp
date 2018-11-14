@@ -1,7 +1,19 @@
 //@flow
 
-function checkPassword(password) {
+export default function checkPassword(password) {
   if (password.length < 6) {
     return {success: false, reason: 'Password too short'};
+  } else {
+    return containUpperLower(password);
+  }
+}
+function containUpperLower(password) {
+  let setUpper = password.toUpperCase();
+  let setLower = password.toLowerCase();
+
+  if (password === setLower || password === setUpper) {
+    return {success: false, reason: 'Password does not meet requirement'};
+  } else {
+    return true;
   }
 }
