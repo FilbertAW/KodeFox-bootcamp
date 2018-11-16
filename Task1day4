@@ -1,0 +1,27 @@
+//@flow
+type Data = {[string]: mixed};
+class DataStore {
+  data: Data = {};
+  set(key: string, value: mixed) {
+    this.data[key] = value;
+  }
+  get(key: string) {
+    return this.data[key];
+  }
+  forEach(fn: Function) {
+    for (let key of Object.keys(this.data)) {
+      fn(key, this.data[key]);
+    }
+  }
+}
+
+export default DataStore;
+
+let d = new DataStore();
+
+d.set('apple', 570);
+d.set('banana', 9865);
+
+d.forEach((key: string, value: mixed) => {
+  console.log(key, ':', value);
+});
